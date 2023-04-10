@@ -10,25 +10,20 @@ public class BaiTap3 : MonoBehaviour
 
     Vector3 start;
     Vector3 target;
-    float progress;
 
     private void Start()
     {
         transform.position = pos1;
         start = pos1;
         target = pos2;
-        progress = 0f;
     }
 
     private void Update()
     {
-        progress += Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, target, 0.2f);
 
-        transform.position = Vector3.MoveTowards(transform.position, target, 0.5f);
-
-        if(progress >= 1f)
+        if(Vector3.Distance(transform.position, target) <= 0.05f)
         {
-            progress = 0f;
             ChangeTarget();
         }
     }
