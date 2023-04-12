@@ -2,35 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaiTap2 : MonoBehaviour
+public class BaiTap5 : MonoBehaviour
 {
     [SerializeField] Vector3 pos1 = Vector3.zero;
-    [SerializeField] Vector3 pos2 = new Vector3(2, 2, 2);
+    [SerializeField] Vector3 pos2 = new Vector3(10, 10, 10);
 
-    private Vector3 dir;
+    private Vector3 start;
     private Vector3 target;
+
+    private float progress;
 
     private void Start()
     {
         transform.position = pos1;
-        dir = (pos2 - pos1).normalized;
+        start = pos1;
+        target = pos2;
     }
 
     private void Update()
     {
-        transform.Translate(dir * Time.deltaTime);
+        progress += Time.deltaTime;
 
-        if(Vector3.Distance(transform.position, target) <= 0.1f)
+        transform.position = Vector3.Lerp(start, target, progress);
+
+        if (progress >= 1f)
         {
-            if(target == pos1)
+            progress = 0f;
+
+            start = target;
+            if (target == pos1)
             {
                 target = pos2;
-                dir = (pos2 - pos1).normalized;
             }
             else
             {
                 target = pos1;
-                dir = (pos1 - pos2).normalized;  
             }
         }
     }
